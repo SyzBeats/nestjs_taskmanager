@@ -3,9 +3,10 @@
  * The Service is responsible for all the connected business logic
  */
 
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-import Task from './task.model';
+import Task, { TaskStatus } from './task.model';
+import { v1 as uuid } from 'uuid';
 
 @Controller('tasks')
 export class TasksController {
@@ -15,5 +16,12 @@ export class TasksController {
   @Get()
   getAllTasks(): Task[] {
     return this.tasksService.getAllTasks();
+  }
+  @Post()
+  createTask(
+    @Body('title') title: string,
+    @Body('description') description: string,
+  ): Task {
+    return this.tasksService.createTask(title, description);
   }
 }
