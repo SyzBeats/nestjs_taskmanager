@@ -8,6 +8,7 @@ import {
   Get,
   Post,
   Body,
+  Query,
   Param,
   Delete,
   Patch,
@@ -15,6 +16,7 @@ import {
 import { TasksService } from './tasks.service';
 import Task, { TaskStatus } from './task.model';
 import { CreateTaskDto } from './dto/create-task.dto';
+import { GetFilterTasksDto } from './dto/get-tasks-filter.dto';
 
 @Controller('tasks')
 export class TasksController {
@@ -22,8 +24,12 @@ export class TasksController {
   constructor(private tasksService: TasksService) {}
 
   @Get()
-  getAllTasks(): Task[] {
-    return this.tasksService.getAllTasks();
+  getTasks(@Query() filterDTO: GetFilterTasksDto): Task[] {
+    if (Object.keys(filterDTO).length === 0) {
+      return this.tasksService.getAllTasks();
+    } else {
+      return this.tasksService.getTasksWithFilters(filterDTO);
+    }
   }
 
   /**
@@ -50,11 +56,11 @@ export class TasksController {
    * @param id task that will be updated
    */
   @Patch('/:id/status')
-  updateTaskByID(
+  updateTaskStatus(
     @Param('id') id: string,
     @Body('status') status: TaskStatus,
   ): Task {
-    return this.tasksService.updateTaskByID(id, status);
+    return this.tasksService.updateTaskStatus(id, status);
   }
 
   /**
