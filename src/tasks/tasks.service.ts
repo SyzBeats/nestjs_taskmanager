@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import Task, { TaskStatus } from './task.model';
 import { v1 as uuid } from 'uuid';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -29,7 +29,16 @@ export class TasksService {
   }
 
   getTaskByID(id: string): Task {
-    return this.tasks.find(task => task.id === id);
+    const task = this.tasks.find(task => task.id === id);
+
+    /**
+     * this is an inbuilt exception thrown by nest.js which will be handled internally.
+     * The Thrown exception therefore also is used by all other routes or methods
+     * that internally make use of the getTaskByID method.
+     */
+    if (!task) {
+      throw new NotFoundException(`Task with id ${id} does not exist`);
+    } else return task;
   }
 
   /* CREATE ROUTES
