@@ -38,7 +38,9 @@ export class TasksService {
      */
     if (!task) {
       throw new NotFoundException(`Task with id ${id} does not exist`);
-    } else return task;
+    } 
+    
+    return task;
   }
 
   /* CREATE ROUTES
@@ -75,7 +77,12 @@ export class TasksService {
   --------------------------*/
 
   deleteTaskByID(id: string): Task[] {
-    let filtered = this.tasks.filter(task => task.id !== id);
+
+    // check if found first
+
+    const found = this.getTaskByID(id);
+
+    let filtered = this.tasks.filter(task => task.id !== found.id);
     this.tasks = filtered;
     return filtered;
   }
