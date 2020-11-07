@@ -1,3 +1,5 @@
+import { TaskStatus } from './task-status.enum';
+
 // define shape of tasks
 interface Task {
   id: string;
@@ -6,10 +8,3 @@ interface Task {
   status: TaskStatus;
 }
 export default Task;
-
-// ----------- ENUMS ---------- //
-export enum TaskStatus {
-  OPEN = 'OPEN',
-  IN_PROGRESS = 'IN_PROGRESS',
-  DONE = 'DONE',
-}
