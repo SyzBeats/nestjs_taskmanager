@@ -22,6 +22,10 @@ export class TasksService {
     return found;
   }
 
+  getTasks(filterDto: GetFilterTasksDto): Promise<TaskEntity[]> {
+    return this.taskRepository.getTasks(filterDto);
+  }
+
   async createTask(createTaskDto: CreateTaskDto) {
     return this.taskRepository.createTask(createTaskDto);
   }
@@ -30,5 +34,12 @@ export class TasksService {
     const deleted = await this.taskRepository.delete(id);
     if (!deleted) throw new NotFoundException(`Task with ID ${id} not found`);
     return id;
+  }
+
+  async updateTaskStatus(id: number, status: TaskStatus): Promise<TaskEntity> {
+    let task = await this.getTaskById(id);
+    task.status = status;
+    await task.save();
+    return task;
   }
 }
