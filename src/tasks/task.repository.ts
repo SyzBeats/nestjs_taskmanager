@@ -7,8 +7,7 @@ import { TaskEntity } from './task.entity';
 @EntityRepository(TaskEntity)
 export class TaskRepository extends Repository<TaskEntity> {
   /**
-   * use query builder to execute the query based on the given
-   * object
+   * @description use query builder to execute the query based on the given object
    * @param filterDto Data transfer object
    */
   async getTasks(filterDto: GetFilterTasksDto): Promise<TaskEntity[]> {

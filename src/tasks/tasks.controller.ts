@@ -40,6 +40,7 @@ export class TasksController {
   ): Promise<TaskEntity[]> {
     return this.tasksService.getTasks(filterDto);
   }
+
   @Post()
   @UsePipes(ValidationPipe)
   createTask(@Body() createTaskDto: CreateTaskDto): Promise<TaskEntity> {
