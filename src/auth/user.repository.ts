@@ -10,6 +10,11 @@ import { DB_ERROR_CODES } from 'src/typings/enums';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { User } from './user.entity';
 
+/**
+ * the repository pattern is a specific way of handling the
+ * logic for database entities. This repository can be injected into
+ * any related service @see https://docs.nestjs.com/techniques/database#repository-pattern
+ */
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
   async signup(authCredentialsDto: AuthCredentialsDto) {
