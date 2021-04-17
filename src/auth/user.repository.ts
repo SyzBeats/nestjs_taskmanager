@@ -17,7 +17,7 @@ import { User } from './user.entity';
  */
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-  async signup(authCredentialsDto: AuthCredentialsDto) {
+  async signUp(authCredentialsDto: AuthCredentialsDto) {
     const { username, password } = authCredentialsDto;
 
     try {
@@ -26,6 +26,7 @@ export class UserRepository extends Repository<User> {
       user.username = username;
 
       const hash = await argon2.hash(password);
+
       user.password = hash;
 
       await user.save();
@@ -36,5 +37,18 @@ export class UserRepository extends Repository<User> {
         throw new InternalServerErrorException();
       }
     }
+  }
+
+  async validateUserPassword(
+    authCredentialsDto: AuthCredentialsDto,
+  ): Promise<string> {
+    const { username, password } = authCredentialsDto;
+
+    // this refers to the user entity as this is the users repository
+    const user = await this.findOne({ username });
+
+    // validate if user was found and correct password inserted
+    if (user && user.validatePassword(password)) return user.username;
+    else return null;
   }
 }

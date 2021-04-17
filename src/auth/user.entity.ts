@@ -5,6 +5,7 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
+import * as argon2 from 'argon2';
 
 @Entity()
 // username in the user table should be unique
@@ -18,4 +19,11 @@ export class User extends BaseEntity {
 
   @Column()
   password: string;
+
+  async validatePassword(password: string): Promise<boolean> {
+    // hash the input password
+    const hash = await argon2.hash(password);
+    // match against the users password
+    return hash === this.password;
+  }
 }
