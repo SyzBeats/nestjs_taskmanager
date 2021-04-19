@@ -18,7 +18,7 @@ const AuthValidationPipe = new ValidationPipe({
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post('/signUp')
+  @Post('/signup')
   signUp(
     @Body(AuthValidationPipe)
     authCredentialsDto: AuthCredentialsDto,
@@ -26,8 +26,8 @@ export class AuthController {
     return this.authService.signUp(authCredentialsDto);
   }
 
-  @Post('/signIn')
+  @Post('/signin')
   singIn(@Body(AuthValidationPipe) authCredentialsDto: AuthCredentialsDto) {
-    return this.authService.signIn;
+    return this.authService.signIn(authCredentialsDto);
   }
 }
