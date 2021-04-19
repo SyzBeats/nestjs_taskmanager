@@ -1,6 +1,6 @@
 import { IsString, Matches, MaxLength, MinLength } from 'class-validator';
 
-export class SignupCredentialsDto {
+export class SigninCredentialsDto {
   @IsString()
   @MinLength(4)
   @MaxLength(20)
@@ -11,7 +11,7 @@ export class SignupCredentialsDto {
   @MaxLength(50)
   // at least 1 uppercase, 1 lowercase, 1number or  special char
   @Matches(/(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: 'The provided password is not strong enough',
+    message: 'Invalid credentials',
   })
   password: string;
 }

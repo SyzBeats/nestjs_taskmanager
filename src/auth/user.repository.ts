@@ -7,7 +7,7 @@ import {
 import * as argon2 from 'argon2';
 import { EntityRepository, Repository } from 'typeorm';
 import { DB_ERROR_CODES } from 'src/typings/enums';
-import { AuthCredentialsDto } from './dto/auth-credentials.dto';
+import { SignupCredentialsDto } from './dto/auth-credentials.dto';
 import { User } from './user.entity';
 
 /**
@@ -17,8 +17,8 @@ import { User } from './user.entity';
  */
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
-  async signUp(authCredentialsDto: AuthCredentialsDto) {
-    const { username, password } = authCredentialsDto;
+  async signUp(signupCredentialsDto: SignupCredentialsDto) {
+    const { username, password } = signupCredentialsDto;
 
     try {
       const user = new User();
@@ -40,9 +40,9 @@ export class UserRepository extends Repository<User> {
   }
 
   async validateUserPassword(
-    authCredentialsDto: AuthCredentialsDto,
+    signupCredentialsDto: SignupCredentialsDto,
   ): Promise<string> {
-    const { username, password } = authCredentialsDto;
+    const { username, password } = signupCredentialsDto;
 
     // this refers to the user entity as this is the users repository
     const user = await this.findOne({ username });
