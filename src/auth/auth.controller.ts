@@ -1,13 +1,4 @@
-import {
-  Body,
-  Controller,
-  Post,
-  Get,
-  Req,
-  UseGuards,
-  ValidationPipe,
-} from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Body, Controller, Post, ValidationPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignupCredentialsDto } from './dto/auth-credentials.dto';
 import { SigninCredentialsDto } from './dto/signin-credentials.dto';
@@ -39,12 +30,5 @@ export class AuthController {
   @Post('/signin')
   singIn(@Body(AuthValidationPipe) signinCredentialsDto: SigninCredentialsDto) {
     return this.authService.signIn(signinCredentialsDto);
-  }
-
-  // test to apply guarding
-  @Get('/test')
-  @UseGuards(AuthGuard('jwt'))
-  test(@Req() req) {
-    console.log('test', req);
   }
 }
