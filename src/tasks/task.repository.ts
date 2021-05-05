@@ -36,12 +36,21 @@ export class TaskRepository extends Repository<TaskEntity> {
     user: User,
   ): Promise<TaskEntity> {
     const { title, description } = createTaskDto;
+
     const task = new TaskEntity();
+
     task.title = title;
+
     task.description = description;
+
     task.status = TaskStatus.OPEN;
+
     task.user = user;
+
     await task.save();
+
+    delete task.user;
+
     return task;
   }
 }
